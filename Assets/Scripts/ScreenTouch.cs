@@ -25,12 +25,12 @@ public partial class @ScreenTouch: IInputActionCollection2, IDisposable
     ""maps"": [
         {
             ""name"": ""Player"",
-            ""id"": ""06bf3b41-422b-4e4b-9a80-b6bfc5e3bcba"",
+            ""id"": ""e525d78e-4ff2-4ea7-bedf-7a651a0c9934"",
             ""actions"": [
                 {
                     ""name"": ""PressScreen"",
                     ""type"": ""Button"",
-                    ""id"": ""82de82e3-846c-4428-a5f7-20f8eea52af8"",
+                    ""id"": ""412516d9-7745-4b4f-8aff-adede5a2b4a2"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -39,7 +39,7 @@ public partial class @ScreenTouch: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""TouchPosition"",
                     ""type"": ""Value"",
-                    ""id"": ""fdd5107b-2c91-4c0d-b387-55b5a5395bfd"",
+                    ""id"": ""46a7b5bf-1d5f-4979-8d7d-f556b55c0fed"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -49,18 +49,7 @@ public partial class @ScreenTouch: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""bf5c57d2-bf09-4d8b-bd5d-929c099ae517"",
-                    ""path"": ""<Mouse>/press"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PressScreen"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""32ecfed3-1c03-4a64-a4a3-de08687fce6c"",
+                    ""id"": ""478d2895-7a2a-4486-8790-53378293040d"",
                     ""path"": ""<Touchscreen>/Press"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -71,7 +60,18 @@ public partial class @ScreenTouch: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7318add9-94e5-4f70-9d17-496e24a211b3"",
+                    ""id"": ""cd73a24b-f0f1-4367-b352-f69bb5e1d27b"",
+                    ""path"": ""<Mouse>/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PressScreen"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""79572fde-df0a-4be4-82b2-26a83bdaf7d9"",
                     ""path"": ""<Touchscreen>/position"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -82,7 +82,7 @@ public partial class @ScreenTouch: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""20de1e81-7fad-42be-887d-100fcf688986"",
+                    ""id"": ""14c7dbbc-5150-4401-a635-11e0dda45af5"",
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",

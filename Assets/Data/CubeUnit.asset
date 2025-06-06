@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec070283e5c45924098da7bf4f09e4d7, type: 3}
+  m_Name: CubeUnit
+  m_EditorClassIdentifier: 
+  _colors:
+  - {r: 1, g: 1, b: 1, a: 0}
+  - {r: 1, g: 0, b: 0, a: 0}
+  - {r: 1, g: 0.44463068, b: 0, a: 0}
+  - {r: 1, g: 0.96495914, b: 0, a: 0}
+  - {r: 0.017707825, g: 1, b: 0, a: 0}
+  - {r: 0, g: 1, b: 0.8967023, a: 0}
+  - {r: 0.0047717094, g: 0, b: 1, a: 0}
+  - {r: 0.5584841, g: 0, b: 1, a: 0}
+  _chances: 37000000320000002d00000028000000230000001e0000001900000014000000
