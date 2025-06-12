@@ -12,9 +12,17 @@ public class CubeMerger : MonoBehaviour
     public event Action<int> OnCubeMerged;
     public event Action OnCubeHitted;
 
+    [SerializeField] private AudioClip _mergeSound;
+    private AudioSource _audioSource;
+
     void Start()
     {
         
+    }
+
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -35,11 +43,22 @@ public class CubeMerger : MonoBehaviour
             var mergeValue = _cubeUnit.CubeNumber / 2;
             GameScore.Instance.AddScore(mergeValue);
 
+            PlayMergeSound();
             TossMergeCube();
         }
         else
         {
             OnCubeHitted?.Invoke();
+        }
+    }
+
+    private void PlayMergeSound()
+    {   
+        _audioSource.volume = 0.5f;
+        
+        if (_mergeSound != null && _audioSource != null)
+        {
+            _audioSource.PlayOneShot(_mergeSound);
         }
     }
 
