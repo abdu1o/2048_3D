@@ -381,7 +381,6 @@ MonoBehaviour:
   _inputHandler: {fileID: 1684943239}
   _cubeSpawner: {fileID: 1435297104}
   _clampX: 4
-  _camera: {fileID: 963194227}
 --- !u!1 &626016441
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,7 +461,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputHandler: {fileID: 1684943239}
   _cubeSpawner: {fileID: 1435297104}
-  _throwForce: 20
+  _throwForce: 30
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
