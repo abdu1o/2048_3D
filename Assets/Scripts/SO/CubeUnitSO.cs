@@ -7,6 +7,11 @@ public class CubeUnitSO : ScriptableObject
 {
     [SerializeField] private List<Color> _colors;
     [SerializeField] private List<int> _chances;
+    [SerializeField] private int _mainCubeLayer;
+    [SerializeField] private int onBoardLayer;
+
+    public int MainCubeLayer => _mainCubeLayer;
+    public int OnBoardLayer => onBoardLayer;
 
     public int CubeNumber()
     {
@@ -31,4 +36,10 @@ public class CubeUnitSO : ScriptableObject
         return _colors[colorIndex];
     }
 
+
+    public void SetCubeLayer(CubeUnit cube, int layer)
+    {
+        if(cube == null) return;
+        cube.gameObject.layer = layer;
+    }
 }

@@ -25,6 +25,9 @@ private void SpawnCube()
 
     newCube.SetMainCube(true);
     newCube.CubeViewer.SetCubeView();
+    newCube.CubeUnitData.SetCubeLayer(newCube, newCube.CubeUnitData.MainCubeLayer);
+
+    _cubeUnits.Add(newCube);
 
     OnCubeSpawned?.Invoke(newCube);
 }
@@ -66,6 +69,8 @@ private void SpawnCube()
         }
 
         cube.CubeMerger.enabled = true;
+        cube.CubeUnitData.SetCubeLayer(cube, cube.CubeUnitData.OnBoardLayer);
+        cube.SetMainCube(false);
 
         TakeCubeFromPool();
     }
@@ -96,6 +101,8 @@ private void SpawnCube()
                 cubeUnit.gameObject.SetActive(true);
                 cubeUnit.SetMainCube(true);
                 cubeUnit.CubeViewer.SetCubeView();
+                cubeUnit.CubeUnitData.SetCubeLayer(cubeUnit, cubeUnit.CubeUnitData.MainCubeLayer);
+
 
                 OnCubeSpawned?.Invoke(cubeUnit);
 

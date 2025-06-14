@@ -30,4 +30,9 @@ public class GameScore : MonoBehaviour
 
         _scoreText.text = _scoreValue.ToString();
     }
+
+    public int GetScore()
+    {
+        return _scoreValue;
+    }
 }

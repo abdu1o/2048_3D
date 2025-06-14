@@ -17,7 +17,6 @@ public class CubeThrower : CubeHandler
 
         OnCubeThrown?.Invoke(cubeUnit);
 
-        cubeUnit.SetMainCube(false);
         cubeUnit = null;
 
         base.OnPressCanceled();
