@@ -69,7 +69,6 @@ private void SpawnCube()
         }
 
         cube.CubeMerger.enabled = true;
-        cube.CubeUnitData.SetCubeLayer(cube, cube.CubeUnitData.OnBoardLayer);
         cube.SetMainCube(false);
 
         TakeCubeFromPool();

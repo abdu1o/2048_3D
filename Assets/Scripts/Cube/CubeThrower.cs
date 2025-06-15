@@ -17,6 +17,7 @@ public class CubeThrower : CubeHandler
 
         OnCubeThrown?.Invoke(cubeUnit);
 
+        cubeUnit.CubeUnitData.SetCubeLayer(cubeUnit, cubeUnit.CubeUnitData.OnBoardLayer);
         cubeUnit = null;
 
         base.OnPressCanceled();

@@ -13,6 +13,8 @@ public class GameOver : MonoBehaviour
     [SerializeField] private CanvasGroup _timerScreen;
     [SerializeField] private CubeHandler _cubeHandler;
     [SerializeField] private TMP_Text _timerText;
+    [SerializeField] private TMP_Text _scoreText;
+    [SerializeField] private TMP_Text _highScoreText;
 
     void OnEnable()
     {
@@ -46,6 +48,9 @@ public class GameOver : MonoBehaviour
         EnableCanvasGroup(_scoreScreen, 0f, false);
 
         EnableCanvasGroup(_timerScreen, 0f, false);
+
+        _scoreText.text = $"Score: {GameScore.Instance.ScoreValue}";
+        _highScoreText.text = $"HIGHSCORE: {GameScore.Instance.HighScoreValue}";
     }
 
     private void EnableCanvasGroup(CanvasGroup canvasGroup, float alpha, bool interactable)

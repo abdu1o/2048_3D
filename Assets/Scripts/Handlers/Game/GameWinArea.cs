@@ -7,18 +7,17 @@ public class GameWinArea : MonoBehaviour
 {
     [SerializeField] private int _pointsToWin = 32;
     [SerializeField] private TMP_Text _scoreText;
-    [SerializeField] private TMP_Text _scoreTextField;
     [SerializeField] private CanvasGroup _gameWinScreen;
     [SerializeField] private CanvasGroup _scoreScreen;
     [SerializeField] private CanvasGroup _timerScreen;
     [SerializeField] private CubeHandler _cubeHandler;
+    [SerializeField] private TMP_Text _highScoreText;
 
     private void Update()
     {
-        if (int.Parse(_scoreText.text) >= _pointsToWin)
+        if (GameScore.Instance.ScoreValue >= _pointsToWin)
         {
             Win();
-            
         }
     }
 
@@ -32,12 +31,13 @@ public class GameWinArea : MonoBehaviour
     {
         _cubeHandler.gameObject.SetActive(false);
 
-        _scoreTextField.text = "Score: " + _scoreText.text;
-
         EnableCanvasGroup(_gameWinScreen, 1f, true);
 
         EnableCanvasGroup(_scoreScreen, 0f, false);
 
         EnableCanvasGroup(_timerScreen, 0f, false);
+
+        _scoreText.text = $"Score: {GameScore.Instance.ScoreValue}";
+        _highScoreText.text = $"HIGHSCORE: {GameScore.Instance.HighScoreValue}";
     }
 }

@@ -419,7 +419,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 49.8
+  m_fontSize: 164
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -554,7 +554,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 84.9
+  m_fontSize: 256
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -857,6 +857,8 @@ MonoBehaviour:
   _timerScreen: {fileID: 901438462}
   _cubeHandler: {fileID: 1684943238}
   _timerText: {fileID: 1684913346}
+  _scoreText: {fileID: 1821411529}
+  _highScoreText: {fileID: 1287423912}
 --- !u!1 &518690747
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,7 +944,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 89.4
+  m_fontSize: 200
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1967,12 +1969,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pointsToWin: 32
-  _scoreText: {fileID: 880261501}
-  _scoreTextField: {fileID: 518690749}
+  _scoreText: {fileID: 518690749}
   _gameWinScreen: {fileID: 1039641998}
   _scoreScreen: {fileID: 2077981422}
   _timerScreen: {fileID: 901438462}
   _cubeHandler: {fileID: 1684943238}
+  _highScoreText: {fileID: 278143465}
 --- !u!1 &1287423910
 GameObject:
   m_ObjectHideFlags: 0
@@ -2058,7 +2060,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 49.8
+  m_fontSize: 164
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2551,7 +2553,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 100
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2676,7 +2678,7 @@ GameObject:
   - component: {fileID: 1699365382}
   - component: {fileID: 1699365381}
   - component: {fileID: 1699365380}
-  - component: {fileID: 1699365379}
+  - component: {fileID: 1699365383}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -2705,18 +2707,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -540}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1699365379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699365377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 106ea81e6ab34b54eb36b5d43d77d136, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1699365380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2761,9 +2751,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1699365379}
+      - m_Target: {fileID: 1699365377}
         m_TargetAssemblyTypeName: UIButton, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_MethodName: 
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2811,6 +2801,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1699365377}
   m_CullTransparentMesh: 1
+--- !u!114 &1699365383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699365377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 106ea81e6ab34b54eb36b5d43d77d136, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _restartButton: {fileID: 1699365380}
 --- !u!1 &1769287311
 GameObject:
   m_ObjectHideFlags: 0
@@ -2896,10 +2899,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1769287316}
+      - m_Target: {fileID: 1769287311}
         m_TargetAssemblyTypeName: UIButton, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 3
+        m_MethodName: 
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2958,6 +2961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 106ea81e6ab34b54eb36b5d43d77d136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _restartButton: {fileID: 1769287313}
 --- !u!1 &1821411527
 GameObject:
   m_ObjectHideFlags: 0
@@ -3043,7 +3047,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 89.4
+  m_fontSize: 200
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3237,7 +3241,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72.65
+  m_fontSize: 256
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3319,7 +3323,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 992533c4620cdf74ea1ed7f644935310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scoreText: {fileID: 880261501}
 --- !u!114 &2015200812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3450,6 +3453,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2077981421}
   - component: {fileID: 2077981422}
+  - component: {fileID: 2077981423}
   m_Layer: 5
   m_Name: ScoreScreen
   m_TagString: Untagged
@@ -3490,6 +3494,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &2077981423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077981420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adeff27e6caeac64095c6acc207a2af1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scoreText: {fileID: 880261501}
 --- !u!1001 &6832322881292500152
 PrefabInstance:
   m_ObjectHideFlags: 0
