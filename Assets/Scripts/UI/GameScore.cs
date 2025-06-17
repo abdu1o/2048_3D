@@ -13,9 +13,11 @@ public class GameScore : MonoBehaviour
     private int _highScoreValue;
 
     public event Action<int> OnScoreChanged;
+    public event Action<int> OnHighScoreChanged;
 
     public int ScoreValue => _scoreValue;
     public int HighScoreValue => _highScoreValue;
+
 
     public void Initialize()
     {
@@ -29,6 +31,7 @@ public class GameScore : MonoBehaviour
         }
 
         _highScoreValue = PlayerPrefs.GetInt("HighScore", 0);
+        OnHighScoreChanged?.Invoke(_highScoreValue);
 
         DontDestroyOnLoad(gameObject);
     }
@@ -42,6 +45,7 @@ public class GameScore : MonoBehaviour
         {
             _highScoreValue = _scoreValue;
             PlayerPrefs.SetInt("HighScore", _highScoreValue);
+            OnHighScoreChanged?.Invoke(_highScoreValue);
         }
 
         OnScoreChanged?.Invoke(_scoreValue);
@@ -51,6 +55,7 @@ public class GameScore : MonoBehaviour
     {
         PlayerPrefs.DeleteKey("HighScore");
         _highScoreValue = 0;
+        OnHighScoreChanged?.Invoke(_highScoreValue);
     }
 
     public int GetScore()

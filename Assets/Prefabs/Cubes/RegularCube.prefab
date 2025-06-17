@@ -1060,11 +1060,11 @@ GameObject:
   - component: {fileID: 5822671381236275050}
   - component: {fileID: 5822671381236275052}
   - component: {fileID: 5822671381236275051}
-  - component: {fileID: 8821523757777184199}
   - component: {fileID: 7687794369290851062}
   - component: {fileID: 7730499881379606904}
+  - component: {fileID: 517841836624282622}
   m_Layer: 0
-  m_Name: CubeUnit
+  m_Name: RegularCube
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1118,23 +1118,7 @@ MonoBehaviour:
   _rigidbody: {fileID: 5822671381236275052}
   _cubeUnitData: {fileID: 11400000, guid: e23f60ba43ed65d45a6325a7d8311080, type: 2}
   _cubeViewer: {fileID: 1213675854605465112}
-  _cubeMerger: {fileID: 8821523757777184199}
---- !u!114 &8821523757777184199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5822671381236275049}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cc7a115208430445a9c9455af52ee39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cubeUnit: {fileID: 5822671381236275051}
-  _minInputValueForMerge: 0.5
-  _tossForce: 1.2
-  _mergeSound: {fileID: 8300000, guid: ab47137af88f21b41b3d4491f341ae17, type: 3}
+  _cubeMerger: {fileID: 517841836624282622}
 --- !u!65 &7687794369290851062
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1158,7 +1142,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: ab47137af88f21b41b3d4491f341ae17, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1244,6 +1228,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &517841836624282622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5822671381236275049}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0c1cb3e1cbce744b85ce4642d84ade9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cubeUnit: {fileID: 5822671381236275051}
+  _minInputValueForMerge: 0.01
+  _tossForce: 0.5
+  _mergeSound: {fileID: 8300000, guid: ab47137af88f21b41b3d4491f341ae17, type: 3}
 --- !u!1 &7106858979998861691
 GameObject:
   m_ObjectHideFlags: 0
@@ -1541,11 +1541,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8020962837952903616, guid: 2d74b359c814c9c4fb278b4a43cacd0b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8020962837952903616, guid: 2d74b359c814c9c4fb278b4a43cacd0b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8020962837952903616, guid: 2d74b359c814c9c4fb278b4a43cacd0b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

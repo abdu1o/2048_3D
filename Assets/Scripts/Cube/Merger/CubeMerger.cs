@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class CubeMerger : MonoBehaviour
+public abstract class CubeMerger : MonoBehaviour, ICubeCollisionHandler
 {
     [SerializeField] private CubeUnit _cubeUnit;
     [SerializeField] private float _minInputValueForMerge = 0.1f;
@@ -17,7 +18,7 @@ public class CubeMerger : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     private void Awake()
@@ -31,41 +32,50 @@ public class CubeMerger : MonoBehaviour
 
         if (collision.gameObject.TryGetComponent(out CubeUnit cubeUnit))
         {
-            if (cubeUnit.IsMainCube) return;
-            if (cubeUnit.CubeNumber != _cubeUnit.CubeNumber) return;
-            if (impulseValue < _minInputValueForMerge) return;
-
-            cubeUnit.gameObject.SetActive(false);
-            cubeUnit.CubeMerger.enabled = false;
-
-            OnCubeMerged?.Invoke(cubeUnit.CubeNumber * 2);
-
-            var mergeValue = _cubeUnit.CubeNumber / 2;
-            GameScore.Instance.AddScore(mergeValue);
-
-            PlayMergeSound();
-            TossMergeCube();
-        }
-        else
-        {
-            OnCubeHitted?.Invoke();
+            if (impulseValue > _minInputValueForMerge)
+            {
+                MergeCube(_cubeUnit, cubeUnit);
+            }
+            else
+            {
+                OnCubeHitted?.Invoke();
+            }
         }
     }
 
-    private void PlayMergeSound()
-    {   
+    protected void PlayMergeSound()
+    {
         _audioSource.volume = 0.5f;
-        
+
         if (_mergeSound != null && _audioSource != null)
         {
             _audioSource.PlayOneShot(_mergeSound);
         }
     }
 
-    private void TossMergeCube()
+    protected void TossMergeCube()
     {
         var tossVector = new Vector3(0f, 1f, 0f);
         _cubeUnit.Rigidbody.AddForce(tossVector * _tossForce, ForceMode.Impulse);
     }
+
+    protected void InvokeCubeMerged(int cubeNumber)
+    {
+        OnCubeMerged?.Invoke(cubeNumber);
+    }
+
+    protected void EnableMergeCube(bool enabled, CubeUnit cubeUnit)
+    {
+        cubeUnit.gameObject.SetActive(enabled);
+        cubeUnit.CubeMerger.enabled = enabled;
+    }
+
+    protected void AddMergeValueToScore(CubeUnit cubeUnit)
+    { 
+        var mergeValue = cubeUnit.CubeNumber / 2;
+        GameScore.Instance.AddScore(mergeValue);
+    }
+
+    public abstract void MergeCube(CubeUnit self, CubeUnit other);
 
 }

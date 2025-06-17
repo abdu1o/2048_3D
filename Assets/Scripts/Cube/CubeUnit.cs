@@ -9,7 +9,6 @@ public class CubeUnit : MonoBehaviour
     [SerializeField] private CubeUnitSO _cubeUnitData;
     [SerializeField] private CubeViewer _cubeViewer;
     [SerializeField] private CubeMerger _cubeMerger;
-
     private bool _isMainCube;
     private int _cubeNumber;
 
