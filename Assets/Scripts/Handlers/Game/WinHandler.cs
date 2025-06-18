@@ -7,7 +7,7 @@ namespace Handlers.Game
     {
         public static WinHandler Instance { get; private set; }
 
-        [SerializeField] private int winningPoints;
+        [SerializeField] private int winningPoints = 126;
         private int _currentScore;
 
         public event Action OnWin;
