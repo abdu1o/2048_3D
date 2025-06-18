@@ -1,15 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Bootstraper : MonoBehaviour
+namespace Handlers.Game
 {
-    [SerializeField] private GameScore _gameScore;
-    void Awake()
+    public class Bootstraper : MonoBehaviour
     {
-        _gameScore.Initialize();
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        [SerializeField] private GameScore _gameScore;
+        private void Awake()
+        {
+            _gameScore.Initialize();
+            
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 }

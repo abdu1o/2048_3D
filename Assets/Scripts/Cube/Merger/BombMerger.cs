@@ -1,33 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class BombMerger : CubeMerger
+namespace Cube.Merger
 {
-    [SerializeField] private float _exploationRadius = 10f;
-
-
-    public override void MergeCube(CubeUnit self, CubeUnit other)
+    public class BombMerger : CubeMerger
     {
-        var cubesInOverlapSphere = Physics.OverlapSphere(transform.position, _exploationRadius);
-
-        foreach (var cube in cubesInOverlapSphere)
+        [SerializeField] private float _explosionRadius;
+        
+        public override void MergeCube(CubeUnit self, CubeUnit other)
         {
-            if (cube.TryGetComponent(out CubeUnit cubeUnit))
+            var cubesInOverlapSphere = Physics.OverlapSphere(transform.position, _explosionRadius);
+            
+            self.CubeMerger.InvokeCubeMerged(self.CubeNumber * 2);
+            
+            foreach (var cube in cubesInOverlapSphere)
             {
-                EnableMergeCube(false, cubeUnit);
-                AddMergeValueToScore(cubeUnit);
+                if (cube.TryGetComponent(out CubeUnit cubeUnit))
+                {
+                    EnableMergeCube(cubeUnit, false);
+                    AddMergeValueToScore(cubeUnit);
+                }
             }
+            
+            EnableMergeCube(self, false);
         }
 
-        EnableMergeCube(false, self);
-
-        InvokeCubeMerged(self.CubeNumber * 2);
-    }
-
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _exploationRadius);  
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, _explosionRadius);
+        }
     }
 }

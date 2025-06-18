@@ -1,25 +1,26 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CubeThrower : CubeHandler
+namespace Cube
 {
-    [SerializeField] private float _throwForce = 2f;
-    public event Action<CubeUnit> OnCubeThrown;
-
-    protected override void OnPressCanceled()
+    public class CubeThrower : CubeHandler
     {
-        if(cubeUnit == null) return;
-        if (!cubeUnit.IsMainCube) return;
+        [SerializeField] private float _throwForce;
+        
+        public event Action<CubeUnit> OnCubeThrowed;
 
-        cubeUnit.Rigidbody.AddForce(Vector3.back * _throwForce, ForceMode.Impulse);
-
-        OnCubeThrown?.Invoke(cubeUnit);
-
-        cubeUnit.CubeUnitData.SetCubeLayer(cubeUnit, cubeUnit.CubeUnitData.OnBoardLayer);
-        cubeUnit = null;
-
-        base.OnPressCanceled();
+        protected override void OnPressCanceled()
+        {
+            if (CubeUnit == null || !CubeUnit.IsMainCube || _inputHandler.ClickedUI) return;
+            
+            CubeUnit.Rigidbody.linearVelocity = Vector3.forward * _throwForce;
+            
+            OnCubeThrowed?.Invoke(CubeUnit);
+            
+            CubeUnit.CubeUnitData.SetCubeLayer(CubeUnit, CubeUnit.CubeUnitData.OnBoardCubeLayer);
+            CubeUnit = null;
+                        
+            base.OnPressCanceled();
+        }
     }
 }

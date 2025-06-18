@@ -1,26 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SearchService;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class RestartButton : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private Button _restartButton;
-
-    private void OnEnable()
+    public class RestartButton : UIButton
     {
-        _restartButton.onClick.AddListener(() => ReloadScene());
-    }
-
-    private void OnDisable()
-    {
-        _restartButton.onClick.RemoveAllListeners();
-    }
-
-    private void ReloadScene()
-    {
-        SceneManager.LoadScene(2);
+        protected override void OnButtonClick()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 }

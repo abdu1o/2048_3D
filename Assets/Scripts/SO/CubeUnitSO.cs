@@ -1,45 +1,44 @@
-using System.Collections;
 using System.Collections.Generic;
+using Cube;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CubeUnitSO", menuName = "CubeUnitData", order = 0)]
-public class CubeUnitSO : ScriptableObject
+namespace SO
 {
-    [SerializeField] private List<Color> _colors;
-    [SerializeField] private List<int> _chances;
-    [SerializeField] private int _mainCubeLayer;
-    [SerializeField] private int onBoardLayer;
-
-    public int MainCubeLayer => _mainCubeLayer;
-    public int OnBoardLayer => onBoardLayer;
-
-    public int CubeNumber()
+    [CreateAssetMenu(fileName = "New CubeUnit Data", menuName = "CubeUnit Data", order = 0)]
+    public class CubeUnitSO : ScriptableObject
     {
-        var roll = Random.Range(0, 100);
-        var cumulative = 0;
+        [SerializeField] private List<Color> _colors;
+        [SerializeField] private List<int> _chances;
+        [SerializeField] private int _mainCubeLayer;
+        [SerializeField] private int _onBoardCubeLayer;
+        
+        public int MainCubeLayer => _mainCubeLayer;
+        public int OnBoardCubeLayer => _onBoardCubeLayer;
 
-        for (int i = 0; i < _chances.Count; i++)
+        public int CubeNumber()
         {
-            cumulative += _chances[i];
-            if (roll < cumulative)
+            var roll = Random.Range(0, 100);
+            var cumulative = 0;
+
+            for (int i = 0; i < _chances.Count; i++)
             {
-                return (int)Mathf.Pow(2, i + 1);
+                cumulative += _chances[i];
+                if (roll < cumulative) return (int)Mathf.Pow(2, i + 1);
             }
+            
+            return (int)Mathf.Pow(2, _chances.Count);
         }
-        return (int)Mathf.Pow(2, _chances.Count);
-    }
 
-    public Color CubeColor(int cubeNumber)
-    {
-        var colorIndex = (int)Mathf.Log(cubeNumber, 2) - 1;
+        public Color CubeColor(int cubeNumber)
+        {
+            var colorIndex = (int)Mathf.Log(cubeNumber, 2) - 1;
+            return _colors[colorIndex];
+        }
 
-        return _colors[colorIndex];
-    }
-
-
-    public void SetCubeLayer(CubeUnit cube, int layer)
-    {
-        if(cube == null) return;
-        cube.gameObject.layer = layer;
+        public void SetCubeLayer(CubeUnit cubeUnit, int layer)
+        {
+            if (cubeUnit == null) return;
+            cubeUnit.gameObject.layer = layer;
+        }
     }
 }

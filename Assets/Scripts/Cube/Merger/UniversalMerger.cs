@@ -1,17 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class UniversalMerger : CubeMerger
+namespace Cube.Merger
 {
-    public override void MergeCube(CubeUnit self, CubeUnit other)
+    public class UniversalMerger : CubeMerger
     {
-        InvokeCubeMerged(other.CubeNumber * 2);
-        EnableMergeCube(false, self);
-        EnableMergeCube(false, other);
-        AddMergeValueToScore(other);
-
-        PlayMergeSound();
-        TossMergeCube();
+        public override void MergeCube(CubeUnit self, CubeUnit other)
+        {
+            self.CubeMerger.InvokeCubeMerged(self.CubeNumber * 2);
+            
+            EnableMergeCube(self, false);   
+            
+            AddMergeValueToScore(other);
+            
+            TossMergeCube(other);
+            
+            other.CubeMerger.InvokeCubeMerged(other.CubeNumber * 2);
+        }
     }
 }

@@ -1,115 +1,133 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class CubeSpawner : MonoBehaviour
+namespace Cube
 {
-    [SerializeField] private CubeUnit _cubePrefab;
-    [SerializeField] private Transform _spawnPoint;
-    [SerializeField] private CubeThrower _cubeThrower;
-
-    private List<CubeUnit> _cubeUnits = new List<CubeUnit>();
-
-    public event Action<CubeUnit> OnCubeSpawned;
-
-    void OnEnable()
+    public class CubeSpawner : MonoBehaviour
     {
-        _cubeThrower.OnCubeThrown += OnCubeTrowed;
-    }
+        [SerializeField] private CubeUnit _cubePrefab;
+        [SerializeField] private Transform _spawnPoint;
+        [SerializeField] private CubeThrower _cubeThrower;
+        
+        private List<CubeUnit> _cubeUnits = new List<CubeUnit>();
+        
+        private CubeUnit _currentCube;
+        private Coroutine _waitCubeStopped;
+        
+        public event Action<CubeUnit> OnCubeSpawned;
 
-private void SpawnCube()
-{
-    Quaternion rotation = Quaternion.Euler(0f, 180f, 0f);
-    var newCube = Instantiate(_cubePrefab, _spawnPoint.position, rotation, transform);
-
-    newCube.SetMainCube(true);
-    newCube.CubeViewer.SetCubeView();
-    newCube.CubeUnitData.SetCubeLayer(newCube, newCube.CubeUnitData.MainCubeLayer);
-
-    _cubeUnits.Add(newCube);
-
-    OnCubeSpawned?.Invoke(newCube);
-}
-
-
-    private void Start()
-    {
-        SpawnCube();
-    }
-
-    void OnDisable()
-    {
-        _cubeThrower.OnCubeThrown -= OnCubeTrowed;
-    }
-
-    private void OnCubeTrowed(CubeUnit throwedCube)
-    {
-        StartCoroutine(WaitCubeStopped(throwedCube));
-    }
-
-    private IEnumerator WaitCubeStopped(CubeUnit cube)
-    {
-        const float delay = 0.1f;
-        const float timeout = 1f;
-
-        var cubeRigidBody = cube.Rigidbody;
-        var timer = 0f;
-
-        while (cubeRigidBody != null && !cubeRigidBody.IsSleeping())
+        private void OnEnable()
         {
-            yield return new WaitForSeconds(delay);
-
-            timer += delay;
-
-            if (timer >= timeout)
-            {
-                break;
-            }
+            _cubeThrower.OnCubeThrowed += OnCubeThrowed;
+        }
+        
+        private void Start()
+        {
+            _cubeUnits.Add(SpawnCube(_cubePrefab));
         }
 
-        cube.CubeMerger.enabled = true;
-        cube.SetMainCube(false);
-
-        TakeCubeFromPool();
-    }
-
-    private void ResetCube(CubeUnit cubeUnit)
-    {
-        cubeUnit.SetMainCube(false);
-        cubeUnit.transform.position = _spawnPoint.position;
-        cubeUnit.transform.rotation = _spawnPoint.rotation;
-
-        cubeUnit.Rigidbody.velocity = Vector3.zero;
-        cubeUnit.Rigidbody.angularVelocity = Vector3.zero;
-
-        cubeUnit.CubeMerger.enabled = false;
-    }
-
-
-    private void TakeCubeFromPool()
-    {
-        for (int i = 0; i < _cubeUnits.Count; i++)
+        private void OnDisable()
         {
-            var cubeUnit = _cubeUnits[i];
-
-            if (!cubeUnit.gameObject.activeSelf)
-            {
-                ResetCube(cubeUnit);
-
-                cubeUnit.gameObject.SetActive(true);
-                cubeUnit.SetMainCube(true);
-                cubeUnit.CubeViewer.SetCubeView();
-                cubeUnit.CubeUnitData.SetCubeLayer(cubeUnit, cubeUnit.CubeUnitData.MainCubeLayer);
-
-
-                OnCubeSpawned?.Invoke(cubeUnit);
-
-                return;
-            }
+            _cubeThrower.OnCubeThrowed -= OnCubeThrowed;
+        }
+        
+        private CubeUnit SpawnCube(CubeUnit cubeUnit)
+        {
+            var newCube = Instantiate(cubeUnit, _spawnPoint.position, Quaternion.identity, transform);
+            _currentCube = newCube;
+            
+            _currentCube.SetMainCube(true);
+            _currentCube.CubeViewer.SetCubeView();
+            _currentCube.CubeUnitData.SetCubeLayer(_currentCube, _currentCube.CubeUnitData.MainCubeLayer);
+            
+            OnCubeSpawned?.Invoke(_currentCube);
+            
+            return _currentCube;
         }
 
-        SpawnCube();
-    }
+        private void OnCubeThrowed(CubeUnit throwedCube)
+        {
+            _currentCube.SetMainCube(false);
+            _currentCube = null;
+            
+            if (_waitCubeStopped != null) StopCoroutine(_waitCubeStopped);
+            
+            _waitCubeStopped = StartCoroutine(WaitCubeStopped(throwedCube));
+        }
 
+        private void ResetCube(CubeUnit cubeUnit)
+        {
+            cubeUnit.Rigidbody.linearVelocity = Vector3.zero;
+            cubeUnit.Rigidbody.angularVelocity = Vector3.zero;
+            cubeUnit.transform.position = _spawnPoint.position;
+            cubeUnit.transform.rotation = Quaternion.identity;
+            cubeUnit.CubeMerger.enabled = false;
+        }
+
+        private void TakeCubeFromPool()
+        {
+            for (int i = 0; i < _cubeUnits.Count; i++)
+            {
+                var cubeUnit = _cubeUnits[i];
+
+                if (!cubeUnit.gameObject.activeSelf)
+                {
+                    ResetCube(cubeUnit);
+                    
+                    cubeUnit.gameObject.SetActive(true);
+                    cubeUnit.SetMainCube(true);
+                    cubeUnit.CubeViewer.SetCubeView();
+                    cubeUnit.CubeUnitData.SetCubeLayer(cubeUnit, cubeUnit.CubeUnitData.MainCubeLayer);
+                    
+                    _currentCube = cubeUnit;
+                    
+                    OnCubeSpawned?.Invoke(_currentCube);
+
+                    return;
+                }
+            }
+            
+            _cubeUnits.Add(SpawnCube(_cubePrefab));
+        }
+
+        private IEnumerator WaitCubeStopped(CubeUnit cube)
+        {
+            const float threshold = 0.1f;
+            const float delay = 0.1f;
+            const float timeout = 1f;
+            
+            var cubeRigidbody = cube.Rigidbody;
+            var timer = 0f;
+
+            while (cubeRigidbody != null && cubeRigidbody.linearVelocity.sqrMagnitude > threshold)
+            {
+                yield return new WaitForSeconds(delay);
+
+                timer += delay;
+
+                if (timer >= timeout) break;
+            }
+
+            cube.CubeMerger.enabled = true;
+            cube.CubeUnitData.SetCubeLayer(cube, cube.CubeUnitData.OnBoardCubeLayer);
+
+            TakeCubeFromPool();
+        }
+
+        public void SpawnBonusCube(CubeUnit bonusCube)
+        {
+            if (_waitCubeStopped != null) StopCoroutine(_waitCubeStopped);
+            
+            if (_currentCube != null)
+            {
+                _currentCube.gameObject.SetActive(false);
+                _currentCube = null;
+            }
+            SpawnCube(bonusCube);
+        }
+    }
 }

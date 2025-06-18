@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cube;
+using Handlers.Game;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +12,7 @@ public class GameOver : MonoBehaviour
 {
     [SerializeField] private GameOverArea _gameOverArea;
     [SerializeField] private CanvasGroup _gameOverScreen;
-    [SerializeField] private CanvasGroup _scoreScreen;
+    [SerializeField] private CanvasGroup _gameScreen;
     [SerializeField] private CanvasGroup _timerScreen;
     [SerializeField] private CubeHandler _cubeHandler;
     [SerializeField] private TMP_Text _timerText;
@@ -26,12 +29,12 @@ public class GameOver : MonoBehaviour
 
     private void OnTimeStopped()
     {
-        EnableCanvasGroup(_timerScreen, 0f, false);
+        EnableCanvasGroup(_timerScreen, 0f, false, false);
     }
 
     private void OnTimeStarted()
     {
-        EnableCanvasGroup(_timerScreen, 1f, true);
+        EnableCanvasGroup(_timerScreen, 1f, true, false);
     }
 
     private void OnTimeToLoseChanged(float time)
@@ -43,20 +46,21 @@ public class GameOver : MonoBehaviour
     {
         _cubeHandler.gameObject.SetActive(false);
 
-        EnableCanvasGroup(_gameOverScreen, 1f, true);
+        EnableCanvasGroup(_gameOverScreen, 1f, true, true);
 
-        EnableCanvasGroup(_scoreScreen, 0f, false);
+        EnableCanvasGroup(_gameScreen, 0f, false, false);
 
-        EnableCanvasGroup(_timerScreen, 0f, false);
+        EnableCanvasGroup(_timerScreen, 0f, false, false);
 
         _scoreText.text = $"Score: {GameScore.Instance.ScoreValue}";
         _highScoreText.text = $"HIGHSCORE: {GameScore.Instance.HighScoreValue}";
     }
 
-    private void EnableCanvasGroup(CanvasGroup canvasGroup, float alpha, bool interactable)
+    private void EnableCanvasGroup(CanvasGroup canvasGroup, float alpha, bool interactable, bool blockRaycasts)
     {
         canvasGroup.alpha = alpha;
         canvasGroup.interactable = interactable;
+        canvasGroup.blocksRaycasts = blockRaycasts;
     }
 
     void OnDisable()

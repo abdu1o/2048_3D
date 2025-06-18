@@ -1,3 +1,5 @@
+using Cube;
+using Cube.Merger;
 using UnityEngine;
 
 public class LifeMerger : CubeMerger
@@ -14,23 +16,23 @@ public class LifeMerger : CubeMerger
     {
         if (_currentLives > 1)
         {
-            EnableMergeCube(false, other);
-                
+            EnableMergeCube(other, false);
+
             AddMergeValueToScore(other);
-                    
-            TossMergeCube();
+
+            TossMergeCube(other);
 
             _currentLives--;
         }
         else
         {
-            EnableMergeCube(false, self);
-                    
+            EnableMergeCube(self, false);
+
             AddMergeValueToScore(other);
-                    
+
             InvokeCubeMerged(other.CubeNumber);
-                    
-            TossMergeCube();
+
+            TossMergeCube(other);
         }
     }
 }

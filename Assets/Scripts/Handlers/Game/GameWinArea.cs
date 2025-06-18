@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cube;
 using TMPro;
+using UI;
 using UnityEngine;
 
 public class GameWinArea : MonoBehaviour

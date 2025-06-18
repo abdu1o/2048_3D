@@ -1,50 +1,61 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
+using Handlers;
 using UnityEngine;
 
-public class CubeHandler : MonoBehaviour
+namespace Cube
 {
-
-    [SerializeField] private InputHandler _inputHandler;
-    [SerializeField] private CubeSpawner _cubeSpawner;
-
-    protected CubeUnit cubeUnit;
-    protected Vector3 mousePosition;
-
-    void OnEnable()
-    {   
-        _cubeSpawner.OnCubeSpawned += OnCubeSpawned;
-        _inputHandler.OnPressStarted += OnPressStarted;
-        _inputHandler.OnPressCanceled += OnPressCanceled;
-    }
-
-    void OnCubeSpawned(CubeUnit newCube)
+    public class CubeHandler : MonoBehaviour
     {
-        cubeUnit = newCube;
-    }
-
-    void OnDisable()
-    {
-        _cubeSpawner.OnCubeSpawned -= OnCubeSpawned;
-        _inputHandler.OnPressStarted -= OnPressStarted;
-        _inputHandler.OnPressCanceled -= OnPressCanceled;
-    }
-
-    protected virtual void OnPressStarted()
-    {
-        if(cubeUnit == null) return;
+        [SerializeField] protected InputHandler _inputHandler;
+        [SerializeField] private CubeSpawner _cubeSpawner;
         
-        _inputHandler.OnPerformedPointer += OnPerformedPointer;
-    }
+        protected CubeUnit CubeUnit;
+        protected Vector3 TouchPosition;
+        
+        private void OnEnable()
+        {
+            _cubeSpawner.OnCubeSpawned += OnCubeSpawned;
+            _inputHandler.OnPressStarted += OnPressStarted;
+            _inputHandler.OnPressCanceled += OnPressCanceled;
+        }
+        
+        private void OnDisable()
+        {
+            _cubeSpawner.OnCubeSpawned -= OnCubeSpawned;
+            _inputHandler.OnPressStarted -= OnPressStarted;
+            _inputHandler.OnPressCanceled -= OnPressCanceled;
+        }
+        
+        private void OnCubeSpawned(CubeUnit newCube)
+        {
+            CubeUnit = newCube;
+        }
+        
+        protected virtual void OnPressStarted()
+        {
+            if (CubeUnit == null) return;
+            StartCoroutine(DelayedPressStart());
+        }
 
-    protected virtual void OnPerformedPointer()
-    {   
-        if(cubeUnit == null) return;
-        mousePosition = _inputHandler.GetTouchPosition(cubeUnit.transform);
-    }
-    
-    protected virtual void OnPressCanceled()
-    {
-        _inputHandler.OnPerformedPointer -= OnPerformedPointer;
+        private IEnumerator DelayedPressStart()
+        {
+            yield return null;
+            
+            if (_inputHandler.ClickedUI) yield break;
+            
+            _inputHandler.OnPerformedPointer += OnPerformedPointer;
+        }
+
+        protected virtual void OnPerformedPointer()
+        {
+            if (CubeUnit == null) return;
+            TouchPosition = _inputHandler.GetTouchPosition(CubeUnit.transform);
+        }
+
+        protected virtual void OnPressCanceled()
+        {
+            _inputHandler.OnPerformedPointer -= OnPerformedPointer;
+        }
     }
 }
